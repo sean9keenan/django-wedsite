@@ -238,8 +238,8 @@ class RSVPCSVView(View):
             address = city = state = zip_code = country = ''
             if ',' in person.rsvp.invite_address and ' ' in person.rsvp.invite_address:
                 # TODO consider using user profile address
-                address = person.rsvp.invite_address.split(',')[0].strip()
-                city = person.rsvp.invite_address.split(',')[1].strip()
+                address = ','.join(person.rsvp.invite_address.split(',')[:-2]).strip()
+                city = person.rsvp.invite_address.split(',')[-2].strip()
                 state = person.rsvp.invite_address.split(' ')[-2]
                 zip_code = person.rsvp.invite_address.split(' ')[-1]
             else:
