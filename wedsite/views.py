@@ -218,6 +218,9 @@ class RSVPCSVView(View):
             "RSVP Group",
             "Name",
             "Address",
+            "City",
+            "State",
+            "Zip",
             "Invited to Rehearsal",
             "Attending Rehearsal",
             "Attending Wedding",
@@ -232,10 +235,23 @@ class RSVPCSVView(View):
             "RSVP Notes",
         ])
         for person in RSVPPerson.objects.all():
+            address = city = state = zip_code = country = ''
+            if ',' in person.rsvp.invite_address and ' ' in person.rsvp.invite_address:
+                # TODO consider using user profile address
+                address = person.rsvp.invite_address.split(',')[0].strip()
+                city = person.rsvp.invite_address.split(',')[1].strip()
+                state = person.rsvp.invite_address.split(' ')[-2]
+                zip_code = person.rsvp.invite_address.split(' ')[-1]
+            else:
+                country = person.rsvp.invite_address
             output.append([
                 person.rsvp.last_names,
                 person.name,
-                person.rsvp.invite_address,  # TODO consider using user profile address
+                address,
+                city,
+                state,
+                zip_code,
+                country,
                 1, # TODO person.rsvp.invited_to_rehearsal,
                 person.is_attending_rehearsal,
                 person.is_attending_wedding,
@@ -246,7 +262,7 @@ class RSVPCSVView(View):
                 person.dietary_vegetarian,
                 person.dietary_vegan,
                 person.dietary_other,
-                person.rsvp.comment,
+                person.rsvp.comment.replace('\r', ' ').replace('\n', ' '),
             ])
         # TODO detect and escape quotes in data
         return HttpResponse(
