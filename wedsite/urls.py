@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.http import Http404
 from wedsite.views import (
-    StaticView, StaticViewNoAuth, RSVPView, CreateAccountView
+    StaticView, StaticViewNoAuth, RSVPCSVView, RSVPView, CreateAccountView
 )
 from django.contrib.auth.views import (
     LoginView, PasswordResetView, PasswordChangeView, PasswordChangeDoneView,
@@ -42,4 +42,5 @@ urlpatterns = [
     get_url('traditions', 'traditions'),
     url(r'^rsvp$', RSVPView.as_view(), name='rsvp'),
     url(r'^create-account$', CreateAccountView.as_view(), name='create-account'),
+    url(r'^guestlist.csv$', RSVPCSVView.as_view(), name='guestlist.csv'),
 ]

@@ -13,7 +13,7 @@ from django.contrib.auth import (
     authenticate, login)
 from django.contrib.auth.models import User
 from wedsite.forms import CreateUserForm, RSVPPersonFormSet, RSVPForm
-from wedsite.models import Profile, RSVP
+from wedsite.models import Profile, RSVP, RSVPPerson
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
@@ -57,6 +57,25 @@ class StaticViewNoAuth(WedsiteView):
 
     def get(self, request):
         return self.render(request, "wedding/pages/" + self.template, {})
+
+
+class StaticViewAdmin(WedsiteView):
+    """
+    Checks that the user is an admin. To use, override get() and call super().
+    """
+    template = None
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            # TODO if user is admin
+            if True:
+                return self.render(request, "wedding/pages/" + self.template, {})
+            else:
+                # TODO 403
+                pass
+        else:
+            return redirect_to_login(request.get_full_path())
+
 
 class RSVPView(WedsiteView):
     """
@@ -179,3 +198,76 @@ class CreateAccountView(SuccessURLAllowedHostsMixin, FormView):
 
         login(self.request, user_cache)
         return HttpResponseRedirect(self.success_url)
+
+
+# TODO change auth
+class RSVPCSVView(View):
+    """
+    RSVP CSV View.
+
+    Produces a CSV of current RSVP data, including personal/invite details as
+    well as all responses received from them so far.
+
+    """
+
+    def get(self, request):
+        """Render the CSV directly with no templating. Still relies on parent class for auth."""
+        output = []
+        # header
+        output.append([
+            "RSVP Group",
+            "Name",
+            "Address",
+            "Invited to Rehearsal",
+            "Attending Rehearsal",
+            "Attending Wedding",
+            "Is a Child",
+            "Reception Table",
+            "Gluten Free?",
+            "Kosher?",
+            "Vegetarian?",
+            "Vegan?",
+            "Other Dietary Restrictions",
+            "Special Requests",
+            "RSVP Notes",
+        ])
+        for person in RSVPPerson.objects.all():
+            output.append([
+                person.rsvp.last_names,
+                person.name,
+                person.rsvp.invite_address,  # TODO consider using user profile address
+                1, # TODO person.rsvp.invited_to_rehearsal,
+                person.is_attending_rehearsal,
+                person.is_attending_wedding,
+                person.is_child,
+                person.table,
+                person.dietary_gluten_free,
+                person.dietary_kosher,
+                person.dietary_vegetarian,
+                person.dietary_vegan,
+                person.dietary_other,
+                person.rsvp.comment,
+            ])
+        # TODO detect and escape quotes in data
+        return HttpResponse(
+            '\n'.join(','.join(f'"{s}"' for s in row) for row in output),
+            content_type='text/csv')
+
+
+class CreateAccountView(SuccessURLAllowedHostsMixin, FormView):
+    """
+    Account creation view. Will take a name, street address,
+    email address and password and will create a new user if it can find
+    a free RSVP that agrees with the user's info.
+    """
+    form_class = CreateUserForm
+    success_url = "/rsvp?new_account=y"
+    template_name = 'registration/create_user.html'
+
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Form sending function. Note the decorators
+        """
