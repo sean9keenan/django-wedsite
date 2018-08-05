@@ -268,22 +268,3 @@ class RSVPCSVView(View):
         return HttpResponse(
             '\n'.join(','.join(f'"{s}"' for s in row) for row in output),
             content_type='text/csv')
-
-
-class CreateAccountView(SuccessURLAllowedHostsMixin, FormView):
-    """
-    Account creation view. Will take a name, street address,
-    email address and password and will create a new user if it can find
-    a free RSVP that agrees with the user's info.
-    """
-    form_class = CreateUserForm
-    success_url = "/rsvp?new_account=y"
-    template_name = 'registration/create_user.html'
-
-    @method_decorator(sensitive_post_parameters())
-    @method_decorator(csrf_protect)
-    @method_decorator(never_cache)
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Form sending function. Note the decorators
-        """
