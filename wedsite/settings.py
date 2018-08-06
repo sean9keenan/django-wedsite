@@ -287,6 +287,15 @@ RSVP_ACTIVE = True
 #	about the family-style menu, buffet, etc.
 MEAL_DESCRIPTION = "All meals will be served family-style"
 
+# Food Choices. These will be the labels and descriptions used for options on
+#       the RSVP. If there are no options (e.g. because it's all family style),
+#       use the MEAL_DESCRIPTION to note this and leave this as an empty list.
+FOOD_CHOICES = [
+    ("Steak", "New York Strip with fancy potatoes and probably something green"),
+    ("Salmon", "Alaskan Salmon. What else do you need?"),
+    ("Vegetarian", ""), # an option lacking further description in the header
+]
+
 #
 # Story Page Info. Recommended to keep this to multiples of 3
 #	to look best. Try to also keep all paragraphs the same length
@@ -439,7 +448,7 @@ DEFAULT_JSON = {
 	"rsvp" : {
 		"cutoff" : RSVP_CUTOFF_DATE,
 		"active" : RSVP_ACTIVE,
-		"meal_description" : MEAL_DESCRIPTION,
+		"meal_description_header" : MEAL_DESCRIPTION,
                 "comments_prompt": "Please use the section below to add a general comment to your response.",
                 # NB these fields must correspond to acutal columns. you can
                 # relabel/filter them, but don't add new ones without changing
@@ -456,6 +465,7 @@ DEFAULT_JSON = {
                     "dietary_other": "Other Dietary Restriction",
                     "special_requests": "Special Request",
                 },
+                "food_options": FOOD_CHOICES,
 	},
 	"story" : STORY_ITEMS,
 	"credits" : {

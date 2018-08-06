@@ -11,7 +11,17 @@ RSVP
     <div class="row">
         <div class="col-sm-12 text-justify rsvp-text">
             {% if rsvp.active %}
-                {{ rsvp.meal_description }}. Special arrangements made for those who note the requirement below. Please use the "special request" box to indicate anything dietary we should know about not covered by the checkboxes. There's also a comment box at the bottom that can be used for sending a personal message to {{ gride.first_name }} and {{ broom.first_name }}. Please submit your response by {{ rsvp.cutoff|date:"F j, Y" }}. Thanks!
+                {{ rsvp.meal_description }}
+                {% if rsvp.food_options %}
+                <ul>
+                    {% for option in rsvp.food_options %}
+                        {% if option[1] %}
+                            <li>{{ option[1] }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                Please use the "special request" box to indicate anything dietary we should know about not covered by the checkboxes. There's also a comment box at the bottom that can be used for sending a personal message to {{ gride.first_name }} and {{ broom.first_name }}. Please submit your response by {{ rsvp.cutoff|date:"F j, Y" }}. Thanks!
             {% else %}
                 Thank you for submitting your response! The RSVP portion of the site is now closed. Your choices are shown below. We appreciate your understanding that all responses which were left as "unknown" will be treated as "no" as we need to submit final numbers to the venues. To make any changes, please contact {{ gride.first_name }} and {{ broom.first_name }} directly. 
             {% endif %}
