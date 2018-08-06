@@ -78,6 +78,24 @@ class RSVP(models.Model):
         blank=True,
         help_text="RSVP Comment")
 
+    # Whether the group was invited to the rehearsal dinner
+    invited_to_rehearsal = models.BooleanField(
+        default=False,
+        help_text="Invited to Rehearsal?",
+    )
+
+    # What gift was received from this group, if any?
+    gift_received = models.TextField(
+        blank=True,
+        help_text='Gift Received',
+    )
+
+    # Whether the group was invited to the rehearsal dinner
+    thank_you_sent = models.BooleanField(
+        default=False,
+        help_text="Thank You Sent?",
+    )
+
     def __str__(self):
         """
         Function for converting the model into a string. This will allow us
@@ -143,6 +161,12 @@ class RSVPPerson(models.Model):
     table = models.IntegerField(
         default=0,
         help_text="Seating assignment for the guest")
+
+    # Food selection for reception, as an index into the food options list in conf
+    food_selection = models.IntegerField(
+        null=True,
+        help_text='Food Selection',
+    )
 
     # When the profile was created and/or updated
     created_at = models.DateTimeField(
