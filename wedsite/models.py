@@ -62,6 +62,7 @@ class RSVP(models.Model):
     # Address where the invitation was sent. This is used to authenticate the
     #   user's attmept to claim the RSVP
     invite_address = models.CharField(
+        blank=True,
         max_length=256,
         help_text="Address invitation was sent to")
 
@@ -165,6 +166,7 @@ class RSVPPerson(models.Model):
     # Food selection for reception, as an index into the food options list in conf
     food_selection = models.IntegerField(
         null=True,
+        blank=True,
         help_text='Food Selection',
     )
 
