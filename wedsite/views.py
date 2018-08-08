@@ -253,7 +253,7 @@ class RSVPCSVView(View):
                 state,
                 zip_code,
                 country,
-                person.rsvp.invited_to_rehearsal,
+                int(person.rsvp.invited_to_rehearsal),
                 person.is_attending_rehearsal,
                 person.is_attending_wedding,
                 person.is_child,
