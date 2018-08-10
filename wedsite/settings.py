@@ -148,6 +148,7 @@ ADMIN_EMAIL = "webmaster@wedsite.io"
 #  Rehearsal Dinner info.
 #
 REHEARSAL_DINNER = {
+
 	"date" : datetime.datetime(2018, 2, 18, 18, 00, 00), # Year, month, day, hour, minute, second
 	"location" : {
 		"name" : "Some Restaurant",
@@ -435,6 +436,7 @@ DEFAULT_JSON = {
 	"rehearsal" : REHEARSAL_DINNER,
 	"ceremony" : WEDDING_CEREMONY,
 	"reception" : WEDDING_RECEPTION,
+	"other_events" : [],  # list of other events, tuples of title, dict formatted similarly to rehearsal
 	"explore" : {
 		"title" : EXPLORE_TITLE,
 		"areas" : (
@@ -458,6 +460,7 @@ DEFAULT_JSON = {
                     "is_attending_rehearsal": "Attend Rehearsal Dinner?",
                     "is_attending_wedding": "Attend Wedding?",
                     "is_child": "Child?",
+                    "food_selection": "Food Selection",
                     "dietary_vegetarian": "Vegetarian",
                     "dietary_vegan": "Vegan",
                     "dietary_kosher": "Kosher",

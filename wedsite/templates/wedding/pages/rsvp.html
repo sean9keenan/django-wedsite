@@ -15,8 +15,8 @@ RSVP
                 {% if rsvp.food_options %}
                 <ul>
                     {% for option in rsvp.food_options %}
-                        {% if option[1] %}
-                            <li>{{ option[1] }}</li>
+                        {% if option.1 %}
+                            <li>{{ option.1 }}</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -90,7 +90,7 @@ RSVP
                             {% if rsvp.fields.name %}
                             <td class="rsvp-box">{{ rsvp.fields.name }}</td>
                             {% endif %}
-                            {% if rsvp.fields.is_attending_rehearsal %}
+                            {% if invite_to_rehearsal and rsvp.fields.is_attending_rehearsal %}
                             <td class="rsvp-box">{{ rsvp.fields.is_attending_rehearsal }}</td>
                             {% endif %}
                             {% if rsvp.fields.is_attending_wedding %}
@@ -104,7 +104,7 @@ RSVP
                             {% if rsvp.fields.name %}
                             <td class="rsvp-box">{{ form.name }} </td>
                             {% endif %}
-                            {% if rsvp.fields.is_attending_rehearsal %}
+                            {% if invite_to_rehearsal and rsvp.fields.is_attending_rehearsal %}
                             <td class="rsvp-box">{{ form.is_attending_rehearsal }} </td>
                             {% endif %}
                             {% if rsvp.fields.is_attending_wedding %}
@@ -119,6 +119,9 @@ RSVP
                 <div class="col-md-6">
                     <table>
                         <tr>
+                            {% if rsvp.fields.food_selection and rsvp.food_options %}
+                            <td class="rsvp-box">{{ rsvp.fields.food_selection }}</td>
+                            {% endif %}
                             {% if rsvp.fields.dietary_vegetarian %}
                             <td class="rsvp-box">{{ rsvp.fields.dietary_vegetarian }}</td>
                             {% endif %}
@@ -136,6 +139,9 @@ RSVP
                             {% endif %}
                         </tr>
                         <tr>
+                            {% if rsvp.fields.food_selection and rsvp.food_options %}
+                            <td class="rsvp-box">{{ form.food_selection }} </td>
+                            {% endif %}
                             {% if rsvp.fields.dietary_vegetarian %}
                             <td class="rsvp-box">{{ form.dietary_vegetarian }} </td>
                             {% endif %}

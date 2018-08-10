@@ -12,6 +12,7 @@ Weekend Events
   <!-- Row with wedding map and venue info -->
   <div class="row">
 
+    {% if invite_to_rehearsal %}
     <!-- Rehearsal Dinner -->
     <div class="col-sm-4 text-justify">
       <h2 class="text-center">
@@ -32,6 +33,7 @@ Weekend Events
         {{ rehearsal.additional_info }}
       </p>
     </div>
+    {% endif %}
 
     <!-- Wedding Ceremony -->
     <div class="col-sm-4 text-justify">
@@ -74,7 +76,30 @@ Weekend Events
         {{ reception.additional_info }}
       </p>
     </div>
-    
+ 
+    <!-- Other Events -->
+    {% for event in other_events %}
+    <div class="col-sm-4 text-justify">
+      <h2 class="text-center">
+        {{ event.1.date|date:"l, n/d" }}
+        <br>
+        <small class="text-muted">{{event.0}}</small>
+      </h2>
+      <p>
+        We'll be gathering at {{ event.1.date|date:"g:i A"}} at:
+        <br><br>
+        <b>{{ event.1.location.name }}</b>
+        <br>
+        {{ event.1.location.address }}
+        <br>{{ event.1.location.city }}, {{ event.1.location.state }} {{ event.1.location.zip }}
+        <br>
+        <a href={{ event.1.location.maps_link }}>Map Link</a>
+        <br><br>
+        {{ event.1.additional_info }}
+      </p>
+    </div>
+    {% endfor %}
+
   </div>
 </div>
 {% endblock %}

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone as utils_timezone
+from wedsite.conf import settings
 
 class Profile(models.Model):
     """
@@ -168,6 +169,10 @@ class RSVPPerson(models.Model):
         null=True,
         blank=True,
         help_text='Food Selection',
+        choices=(
+            (i, choice)
+            for i, (choice, _) in enumerate(settings.WEDSITE_JSON["rsvp"]["food_options"])
+        ),
     )
 
     # When the profile was created and/or updated

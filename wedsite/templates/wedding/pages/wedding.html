@@ -19,29 +19,22 @@ Wedding
   <!-- Row with wedding map and venue info -->
   <div class="row">
     <div class="col-sm-4 text-justify">
-      <h2 class="text-center">{{ ceremony.location.name }}</h2>
-        <dt>Address</dt>
-          <dd style="margin-bottom:8px">
-            {{ ceremony.location.address }}<br>
-            {{ ceremony.location.city }}, {{ ceremony.location.state }} {{ ceremony.location.zip }}
-          </dd>
-        <br>
-        <dt>Directions</dt>
-          <dd style="margin-bottom:8px">
-            <a href={{ ceremony.location.maps_link }}>Maps Link</a><br>
-            {{ ceremony.location.parking }}
-          </dd>
-        <br>
-        <p>
-          Questions? Need help setting up a carpool? Please reach out to your point of contact, who can be found on the 
-          <a href="/contacts">Contacts</a> page.
-        </p>
-    </div>
-    <div class="col-sm-4 text-justify">
       <h2 class="text-center">Ceremony<br><small class="text-muted">{{ ceremony.date|date:"g:i A"}}</small></h2>
+      <h3 class="text-center">{{ ceremony.location.name }}</h2>
         <p>
           <div class="text-center"><b>Please arrive no later than {{ ceremony.arrive_by|date:"g:i A"}}.</b></div>
-          <br>
+            <dt>Address</dt>
+              <dd style="margin-bottom:8px">
+                {{ ceremony.location.address }}<br>
+                {{ ceremony.location.city }}, {{ ceremony.location.state }} {{ ceremony.location.zip }}
+              </dd>
+            <br>
+            <dt>Directions</dt>
+              <dd style="margin-bottom:8px">
+                <a href={{ ceremony.location.maps_link }}>Maps Link</a><br>
+                {{ ceremony.location.parking }}
+              </dd>
+            <br>
           <dt>Attire</dt>
             <dd style="margin-bottom:8px">
               {{ ceremony.attire }}
@@ -55,6 +48,20 @@ Wedding
     </div>
     <div class="col-sm-4 text-justify">
       <h2 class="text-center">Reception<br><small class="text-muted">{{ reception.date|date:"g:i A"}} - {{ reception.time_end|date:"g:i A"}}</small></h2>
+      <h3 class="text-center">{{ reception.location.name }}</h2>
+        <p>
+            <dt>Address</dt>
+              <dd style="margin-bottom:8px">
+                {{ reception.location.address }}<br>
+                {{ reception.location.city }}, {{ reception.location.state }} {{ reception.location.zip }}
+              </dd>
+            <br>
+            <dt>Directions</dt>
+              <dd style="margin-bottom:8px">
+                <a href={{ reception.location.maps_link }}>Maps Link</a><br>
+                {{ reception.location.parking }}
+              </dd>
+            <br>
       <dt>Details</dt>
         <dd style="margin-bottom:8px">
           {{ reception.details }}

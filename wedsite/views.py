@@ -45,7 +45,15 @@ class StaticView(WedsiteView):
 
     def get(self, request):
         if request.user.is_authenticated or (request.get_full_path() == reverse('index')):
-            return self.render(request, "wedding/pages/" + self.template, {})
+            rsvp = None
+            try:
+                rsvp = self.request.user.profile.rsvp
+            except:
+                pass
+
+            return self.render(request, "wedding/pages/" + self.template, {
+                'invite_to_rehearsal': rsvp.invited_to_rehearsal if rsvp else False,
+            })
         else:
             return redirect_to_login(request.get_full_path())
 
@@ -110,7 +118,10 @@ class RSVPView(WedsiteView):
 
 
 
-            return self.render(request, 'wedding/pages/rsvp.html', {'formset': formset})
+            return self.render(request, 'wedding/pages/rsvp.html', {
+                'formset': formset,
+                'invite_to_rehearsal': rsvp.invited_to_rehearsal,
+            })
         else:
             return redirect_to_login(request.get_full_path())
 
@@ -133,7 +144,8 @@ class RSVPView(WedsiteView):
                     'formset': formset,
                     'rsvp_form': rsvp_form,
                     'updated': updated,
-                    'new_account': new_account
+                    'new_account': new_account,
+                    'invite_to_rehearsal': rsvp.invited_to_rehearsal,
                 }
             )
         else:
@@ -227,6 +239,7 @@ class RSVPCSVView(View):
             "Attending Wedding",
             "Is a Child",
             "Reception Table",
+            "Food Selection",
             "Gluten Free?",
             "Kosher?",
             "Vegetarian?",
@@ -258,6 +271,7 @@ class RSVPCSVView(View):
                 person.is_attending_wedding,
                 person.is_child,
                 person.table,
+                person.food_selection,
                 person.dietary_gluten_free,
                 person.dietary_kosher,
                 person.dietary_vegetarian,
