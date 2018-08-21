@@ -30,7 +30,7 @@ Weekend Events
         <br>
         <a href={{ rehearsal.location.maps_link }}>Map Link</a>
         <br><br>
-        {{ rehearsal.additional_info }}
+        {{ rehearsal.additional_info|safe }}
       </p>
     </div>
     {% endif %}
@@ -52,7 +52,7 @@ Weekend Events
         <br>
         <a href={{ ceremony.location.maps_link }}>Map Link</a>
         <br><br>
-        {{ ceremony.additional_info }}
+        {{ ceremony.additional_info|safe }}
       </p>
     </div>
 
@@ -73,7 +73,7 @@ Weekend Events
         <br>
         <a href={{ reception.location.maps_link }}>Map Link</a>
         <br><br>
-        {{ reception.additional_info }}
+        {{ reception.additional_info|safe }}
       </p>
     </div>
  
@@ -86,7 +86,9 @@ Weekend Events
         <small class="text-muted">{{event.0}}</small>
       </h2>
       <p>
+        {% if event.1.include_meet_time %}
         We'll be gathering at {{ event.1.date|date:"g:i A"}} at:
+        {% endif %}
         <br><br>
         <b>{{ event.1.location.name }}</b>
         <br>
@@ -95,7 +97,7 @@ Weekend Events
         <br>
         <a href={{ event.1.location.maps_link }}>Map Link</a>
         <br><br>
-        {{ event.1.additional_info }}
+        {{ event.1.additional_info|safe }}
       </p>
     </div>
     {% endfor %}
