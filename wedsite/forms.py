@@ -153,6 +153,11 @@ class CreateUserForm(forms.Form):
         for rsvp in rsvps:
             if rsvp.invite_address:
                 rsvp_nums = strip_address(rsvp.invite_address)
+                # match if all numbers (incl zip code) are same
+                # NB: one gotcha that we ran into is that some people spell out
+                # numbered streets, e.g. "First" instead of "1st." Didn't
+                # implement a solution for this, just debugged with those
+                # people directly and told them to use the spelling we had.
                 if (rsvp_nums == addr_nums):
                     found_rsvp = rsvp
                     break
