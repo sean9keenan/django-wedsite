@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.views.generic.edit import FormView, UpdateView
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -112,11 +113,25 @@ class RSVPView(WedsiteView):
                 try:
                     formset.save()
                     rsvp_form.save()
+
+                    if settings.SEND_EMAIL_ON_RSVP:
+                        # send mail to inform admins about the new rsvp
+                        msg = 'The following people RSVPed:\n'
+                        for person_form in formset:
+                            msg += f'  * {person_form.name}: '
+                            msg += f'rehearsal={person_form.is_attending_rehearsal} '
+                            msg += f'wedding={person_form.is_attending_wedding}'
+                        send_mail(
+                            f'Wedsite RSVP Received: {rsvp_form.instance.last_names}',
+                            msg,
+                            settings.DEFAULT_FROM_EMAIL,
+                            [settings.ADMIN_EMAIL],
+                            fail_silently=True,
+                        )
+
                     return HttpResponseRedirect(request.get_full_path() + '?updated=y')
                 except ValueError:
                     pass
-
-
 
             return self.render(request, 'wedding/pages/rsvp.html', {
                 'formset': formset,

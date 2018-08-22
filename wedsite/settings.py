@@ -503,3 +503,6 @@ DEFAULT_JSON = {
 
 # if an app does not override WEDSITE_JSON, use DEFAULT_JSON
 WEDSITE_JSON = DEFAULT_JSON
+
+# by default, send an email when an RSVP comes in
+SEND_EMAIL_ON_RSVP = True
