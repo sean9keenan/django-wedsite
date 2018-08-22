@@ -120,7 +120,7 @@ class RSVPView(WedsiteView):
                         for person_form in formset:
                             msg += f'  * {person_form.cleaned_data["name"]}: '
                             msg += f'rehearsal={person_form.cleaned_data["is_attending_rehearsal"]} '
-                            msg += f'wedding={person_form.cleaned_data["is_attending_wedding"]}'
+                            msg += f'wedding={person_form.cleaned_data["is_attending_wedding"]}\n'
                         send_mail(
                             f'Wedsite RSVP Received: {rsvp.last_names}',
                             msg,
