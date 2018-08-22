@@ -118,11 +118,11 @@ class RSVPView(WedsiteView):
                         # send mail to inform admins about the new rsvp
                         msg = 'The following people RSVPed:\n'
                         for person_form in formset:
-                            msg += f'  * {person_form.name}: '
-                            msg += f'rehearsal={person_form.is_attending_rehearsal} '
-                            msg += f'wedding={person_form.is_attending_wedding}'
+                            msg += f'  * {person_form.cleaned_data["name"]}: '
+                            msg += f'rehearsal={person_form.cleaned_data["is_attending_rehearsal"]} '
+                            msg += f'wedding={person_form.cleaned_data["is_attending_wedding"]}'
                         send_mail(
-                            f'Wedsite RSVP Received: {rsvp_form.instance.last_names}',
+                            f'Wedsite RSVP Received: {rsvp.last_names}',
                             msg,
                             settings.DEFAULT_FROM_EMAIL,
                             [settings.ADMIN_EMAIL],
