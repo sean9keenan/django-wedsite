@@ -183,3 +183,11 @@ html {
 .hotel-td {
     padding: 5px 0px 0px 20px;
 }
+
+/* override display properties of bootstrap columns to allow sane wrapping */
+.col-sm-4 {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+    width: 32%;
+}
