@@ -102,6 +102,7 @@ class CreateUserForm(forms.Form):
             self.cleaned_data.get('invite_zip')
 
     def clean_email_address(self):
+        # TODO allow relogin of existing users here
         username = self.cleaned_data.get('email_address')
         try:
             user = User.objects.get(username=username)
@@ -133,7 +134,7 @@ class CreateUserForm(forms.Form):
                 code='password_mismatch',
             )
 
-        # Make sure the address entered is mildly associated with a free
+        # Make sure the address entered is mildly associated with an
         #   address in our RSVP database
         address = self.get_address()
         last_name = self.cleaned_data.get('last_name')
@@ -148,7 +149,7 @@ class CreateUserForm(forms.Form):
             )
 
         # Pull all RSVPs under the given last name
-        rsvps = RSVP.objects.all().filter(last_names__icontains=last_name).filter(profile=None)
+        rsvps = RSVP.objects.all().filter(last_names__icontains=last_name)
         found_rsvp = None
         for rsvp in rsvps:
             if rsvp.invite_address:
