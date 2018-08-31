@@ -16,7 +16,9 @@ Explore LA!
       <div class="col-sm-4 text-justify">
         <h2 class="text-center"> {{ place.name }} </h2>
 
+        {% if place.map_address %}
         {% easy_map place.map_address 100 100 10 using 'wedding/blocks/explore_map.html'%}
+        {% endif %}
 
         <p> {{ place.description }} </p>
       </div>
