@@ -25,6 +25,10 @@
 <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Hammersmith+One|Montserrat:200,300" rel="stylesheet">
 <!-- Our own CSS -->
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<!-- Desktop-only CSS -->
+{% if not request.user_agent.is_mobile %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/desktop_style.css' %}" />
+{% endif %}
 
 <!-- Favicons -->
 {% if favicon|length > 0 %}
