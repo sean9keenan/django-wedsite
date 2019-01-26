@@ -262,6 +262,8 @@ class RSVPCSVView(View):
             "Other Dietary Restrictions",
             "Special Requests",
             "RSVP Notes",
+            "Gift Received",
+            "Thank You Sent",
         ])
         for person in RSVPPerson.objects.all():
             address = city = state = zip_code = country = ''
@@ -293,6 +295,8 @@ class RSVPCSVView(View):
                 person.dietary_vegan,
                 person.dietary_other,
                 person.rsvp.comment.replace('\r', ' ').replace('\n', ' '),
+                person.rsvp.gift_received.replace('\r', ' ').replace('\n', ' '),
+                person.rsvp.thank_you_sent.replace('\r', ' ').replace('\n', ' '),
             ])
         # TODO detect and escape quotes in data
         return HttpResponse(
