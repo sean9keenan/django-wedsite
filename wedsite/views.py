@@ -296,7 +296,7 @@ class RSVPCSVView(View):
                 person.dietary_other,
                 person.rsvp.comment.replace('\r', ' ').replace('\n', ' '),
                 person.rsvp.gift_received.replace('\r', ' ').replace('\n', ' '),
-                person.rsvp.thank_you_sent.replace('\r', ' ').replace('\n', ' '),
+                person.rsvp.thank_you_sent,
             ])
         # TODO detect and escape quotes in data
         return HttpResponse(
