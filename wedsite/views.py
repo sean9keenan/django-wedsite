@@ -294,6 +294,7 @@ class RSVPCSVView(View):
                 person.dietary_vegetarian,
                 person.dietary_vegan,
                 person.dietary_other,
+                person.special_requests,
                 person.rsvp.comment.replace('\r', ' ').replace('\n', ' '),
                 person.rsvp.gift_received.replace('\r', ' ').replace('\n', ' '),
                 person.rsvp.thank_you_sent,
