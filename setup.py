@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-wedsite',
-    version='0.0.4',
+    version='0.0.5',
     packages=find_packages(),
     include_package_data=True,
     license="GPLv3",
@@ -35,7 +35,7 @@ setup(
     # Installation Requirements
     install_requires = [
         "dj-database-url==0.4.1",
-        "Django==1.11",
+        "Django==1.11.17",
         "gunicorn==19.6.0",
         "psycopg2==2.7.3",
         "whitenoise==3.3.0",
